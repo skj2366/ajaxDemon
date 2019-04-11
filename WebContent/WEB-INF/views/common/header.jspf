@@ -1,0 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<c:set var="rPath" value="${pageContext.request.contextPath}"/><!-- scope="request"스코프로 디폴트값을 바꿀수 있다. -->
+<!-- page : ${pageScope.rPath}<br>
+request : ${requestScope.rPath}<br>
+session : ${sessionScope.rPath}<br>
+application : ${applicationScope.rPath}<br> -->
+${rPath}
+<!-- <br> -->
