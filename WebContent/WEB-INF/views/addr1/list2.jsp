@@ -22,27 +22,17 @@
 			search();
 		}
 	}
-	function changeSelectSido(){
-		var sido = document.getElementById("sido");
-		var selectSido = sido.options[sido.selectedIndex].value;
-		location.href="/addr/list?page=${page}&pageCount=${pageCount}&ad_sido="+selectSido;
-	}
-	function changeSelectGugun(){
-		var gugun = document.getElementById("gugun");
-		var selectGugun = gugun.options[gugun.selectedIndex].value;
-		location.href="/addr/list?page=${page}&pageCount=${pageCount}&ad_sido=${ad_sido}&ad_gugun="+selectGugun;
-	}
 </script>
 
-<select name="ad_sido" id="sido" onchange="changeSelectSido()">
+<select name="ad_sido">
 <c:forEach items="${asList}" var="sido">
-<option value="${sido}" <c:if test="${ad_sido==sido}"> selected </c:if>>${sido}</option>
+<option value="${sido}">${sido}</option>
 </c:forEach>
 </select>
 
-<select name="ad_gugun" id="gugun" onchange="changeSelectGugun()">
+<select name="ad_gugun">
 <c:forEach items="${agList}" var="gugun">
-<option value="${gugun}" <c:if test="${ad_gugun==gugun}"> selected </c:if>>${gugun}</option>
+<option value="${gugun}">${gugun}</option>
 </c:forEach>
 </select>
 <label for="ad_dong">읍면동 : </label><input type="text" name="ad_dong" id="ad_dong" value="${param.ad_dong}" onkeypress="enter()">

@@ -12,7 +12,7 @@ import java.util.Map;
 import dao.Address1DAO;
 import db.DBCon;
 
-public class Address1DAOImpl implements Address1DAO {
+public class Address1DAOImpl222 implements Address1DAO {
 
 	private static String selectAddrListSql ="select * from (\r\n" + 
 			"select ROWNUM as rown, addr.* FROM\r\n" + 
@@ -29,65 +29,18 @@ public class Address1DAOImpl implements Address1DAO {
 	@Override
 	public List<Map<String, String>> selectAddrList(Map<String, String> addr) {
 		String adDong = addr.get("ad_dong");
-		String adSido = addr.get("ad_sido");
-		String adGugun = addr.get("ad_gugun");
 		String sql = selectAddrListSql.replace("$where$","");
 		try {
 			if(adDong!=null) {
 				sql = selectAddrListSql.replace("$where$", " where ad_dong like '%'||?||'%'");
 			}
-			if(adSido!=null) {
-				sql = selectAddrListSql.replace("$where$", " where ad_sido like '%'||?||'%'");
-			}
-			if(adGugun!=null) {
-				sql = selectAddrListSql.replace("$where$", " where ad_Gugun like '%'||?||'%'");
-			}
-			if(adDong!=null && adSido!=null) {
-				sql = selectAddrListSql.replace("$where$"," where ad_dong like '%' || ? || '%' AND ad_sido like '%' || ? || '%'");
-			}
-			if(adSido!= null && adGugun!=null) {
-				sql = selectAddrListSql.replace("$where$"," where ad_gugun like '%' || ? || '%' AND ad_sido like '%' || ? || '%'");
-			}
-			if(adDong!=null && adSido!=null && adGugun!=null) {
-				sql = selectAddrListSql.replace("$where$"," where ad_dong like '%' || ? || '%' AND ad_sido like '%' || ? || '%' AND ad_gugun like '%' || ? || '%'");
-			}
-			
 			PreparedStatement ps = DBCon.getCon().prepareStatement(sql);
 			ps.setString(1,addr.get("lNum"));
 			ps.setString(2, addr.get("sNum"));
-			if(adDong!=null && !"".equals(adDong)) {//&& "".equals(adSido)) {
-				ps.setString(1, adDong);
-				ps.setString(2, addr.get("lNum"));
+			if(adDong!=null) {
+				ps.setString(1,adDong);
+				ps.setString(2,addr.get("lNum"));
 				ps.setString(3, addr.get("sNum"));
-			}
-			if(adSido!=null && !"".equals(adSido)) {//&& "".equals(adDong)) {
-				ps.setString(1, adSido);
-				ps.setString(2, addr.get("lNum"));
-				ps.setString(3, addr.get("sNum"));
-			}
-			if(adGugun!=null && !"".equals(adGugun)) {
-				ps.setString(1, adGugun);
-				ps.setString(2, addr.get("lNum"));
-				ps.setString(3, addr.get("sNum"));
-			}
-			if(adDong!=null && adSido!=null ) {//&& !"".equals(adDong) && !"".equals(adSido)) {
-				ps.setString(1, adDong);
-				ps.setString(2, adSido);
-				ps.setString(3, addr.get("lNum"));
-				ps.setString(4, addr.get("sNum"));
-			}
-			if(adSido!= null && adGugun!=null && !"".equals(adDong)) {
-				ps.setString(1, adGugun);
-				ps.setString(2, adSido);
-				ps.setString(3, addr.get("lNum"));
-				ps.setString(4, addr.get("sNum"));
-			}
-			if(adDong!=null && adSido!=null && adGugun!=null ) {//&& !"".equals(adDong) && !"".equals(adSido)) {
-				ps.setString(1, adDong);
-				ps.setString(2, adSido);
-				ps.setString(3, adGugun);
-				ps.setString(4, addr.get("lNum"));
-				ps.setString(5, addr.get("sNum"));
 			}
 			ResultSet rs = ps.executeQuery();
 			List<Map<String,String>> addrList = new ArrayList<>();
@@ -113,50 +66,15 @@ public class Address1DAOImpl implements Address1DAO {
 	@Override
 	public int selectTotalAddrCount(Map<String,String> addr) {
 		String adDong = addr.get("ad_dong");
-		String adSido = addr.get("ad_sido");
-		String adGugun = addr.get("ad_gugun");
 		String sql = selectAddrCount.replace("$where$", "");
-		if(adDong!=null) {
-			sql = selectAddrCount.replace("$where$"," where ad_dong like '%' || ? || '%'");
-		}
-		if(adSido!=null) {
-			sql = selectAddrCount.replace("$where$"," where ad_sido like '%' || ? || '%'");
-		}
-		if(adGugun!=null) {
-			sql = selectAddrCount.replace("$where$"," where ad_gugun=?");
-		}
-		if(adDong!=null && adSido!=null) {
-			sql = selectAddrCount.replace("$where$"," where ad_dong like '%' || ? || '%' AND ad_sido like '%' || ? || '%'");
-		}
-		if(adSido!= null && adGugun!=null) {
-			sql = selectAddrCount.replace("$where$"," where ad_gugun like '%' || ? || '%' AND ad_sido like '%' || ? || '%'");
-		}
-		if(adDong!=null && adSido!=null && adGugun!=null) {
-			sql = selectAddrCount.replace("$where$"," where ad_dong like '%' || ? || '%' AND ad_sido like '%' || ? || '%' AND ad_gugun like '%' || ? || '%' ");
-		}
 		try {
-			PreparedStatement ps = DBCon.getCon().prepareStatement(sql);
 			if(adDong!=null) {
-				ps.setString(1, adDong);
+				sql = selectAddrCount.replace("$where$", " where ad_dong like '%'||?||'%'");
 			}
-			if(adSido!=null) {
-				ps.setString(1, adSido);
-			}
-			if(adGugun!=null) {
-				ps.setString(1, adGugun);
-			}
-			if(adDong!=null && adSido!=null) {
-				ps.setString(1, adDong);
-				ps.setString(2, adSido);
-			}
-			if(adSido!= null && adGugun!=null) {
-				ps.setString(1, adGugun);
-				ps.setString(2, adSido);
-			}
-			if(adDong!=null && adSido!=null && adGugun!=null) {
-				ps.setString(1, adDong);
-				ps.setString(2, adSido);
-				ps.setString(3, adGugun);
+			PreparedStatement ps = DBCon.getCon().prepareStatement(sql);
+
+			if(adDong!=null) {
+				ps.setString(1,adDong);
 			}
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
@@ -169,7 +87,6 @@ public class Address1DAOImpl implements Address1DAO {
 		}
 		return 0;
 	}
-	
 	@Override
 	public Map<String, String> selectAddr(Map<String, String> addr) {
 

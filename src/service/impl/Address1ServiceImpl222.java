@@ -12,7 +12,7 @@ import dao.impl.Address1DAOImpl;
 import service.Address1Service;
 import utils.Command;
 
-public class Address1ServiceImpl implements Address1Service {
+public class Address1ServiceImpl222 implements Address1Service {
 
 //	private Address1DAO adao = new Address1DAOImpl();
 //		
@@ -104,12 +104,7 @@ private Address1DAO adao = new Address1DAOImpl();
 		if(paramMap.get("blockCount")!=null) {
 			blockCount = Integer.parseInt(paramMap.get("blockCount"));
 		}
-		String ad_sido = paramMap.get("ad_sido");
-		String ad_gugun = paramMap.get("ad_gugun");
-		//String ad_dong = paramMap.get("ad_dong");
-		request.setAttribute("ad_sido", ad_sido);
-		request.setAttribute("ad_gugun", ad_gugun);
-		//request.setAttribute("ad_dong", ad_dong);
+		
 		request.setAttribute("pageCount", pageCount);
 		request.setAttribute("blockCount", blockCount);
 		request.setAttribute("page", page);
@@ -137,8 +132,7 @@ private Address1DAO adao = new Address1DAOImpl();
 		request.setAttribute("totalPageCnt", totalPageCnt);
 		List<String> asList = adao.selectAdSido();
 		request.setAttribute("asList", asList);
-		List<String> aggList = selectAdGugun(ad_sido);
-		request.setAttribute("agList", aggList);
+		request.setAttribute("agList", adao.selectAdGugun(asList.get(0)));
 		return addrList;
 	}
 
